@@ -1,14 +1,15 @@
 package com.courseweb.course.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_users")
 public class User {
@@ -19,4 +20,11 @@ public class User {
     private String email;
     private String phone;
     private String password;
+
+    @JsonIgnore
+    @Setter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
+
+
 }
